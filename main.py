@@ -20,6 +20,22 @@ def createjsonlog(path):
     else:
         print("\nInvalid path.")
 
+def changes(jsondata,localdata):
+    """Prints the differences between the json data and the local data."""
+    for i in jsondata.copy():    #Removes the shared elements between the two lists, leaving the 'additions' in localdata and the 'deletions' in jsondata.
+
+        if i in localdata:
+            jsondata.remove(i)
+            localdata.remove(i)
+
+    print("\nAdditions:\n")
+    for i in localdata:
+        print(f"    - {i}")
+
+    print("\nDeletions:\n")
+    for i in jsondata:
+        print(f"    - {i}")
+
 def checkjsonlog(path):
     """Compares the names of the files and folders in the path to the ones in the json log."""
     try:
@@ -29,7 +45,10 @@ def checkjsonlog(path):
         if localdata == jsondata:
             print("\n\nThe data in the log and in the path match.\n\n")
         else:
-            print("\n\nThe data in the log and in the path doesn't match\n\n")
+            print("\n\nThe data in the log and in the path doesn't match.")
+            print("The differences are the following.")
+            changes(jsondata,localdata)
+
     except FileNotFoundError:
         print("\nInvalid path.")
 
