@@ -7,7 +7,9 @@ def getdata(path):
     """Returns a list with the names of all folders and files in a path"""
     data = []
     for filename in glob.iglob(path + '**/**', recursive=True):
-        data.append(filename)
+        data.append(filename.replace(path+"/",""))
+    if "" in data:
+        data.remove("")
     return data
 
 def createjsonlog(path):   
